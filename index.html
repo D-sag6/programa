@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>La Exotik RY - Sabor Urbano</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>LA EXOTiK RY</h1>
+        <p class="subtitle-brand">Sabor Urbano • Envigado</p>
+    </header>
+
+    <!-- PANTALLA DE INICIO / SELECCIÓN DE ROL -->
+    <div id="loginScreen" class="login-container">
+        <div class="card login-card">
+            <h2 class="login-title">Iniciar Sesión</h2>
+            <p class="login-subtitle">Selecciona tu rol para acceder al sistema</p>
+            
+            <button class="btn-role btn-mesero" onclick="seleccionarRol('mesero')">Mesero</button>
+            <button class="btn-role btn-cocina" onclick="seleccionarRol('cocina')">Cocina</button>
+            <button class="btn-role btn-gerente" onclick="seleccionarRol('gerente')">Gerente</button>
+        </div>
+    </div>
+
+    <!-- APLICACIÓN PRINCIPAL -->
+    <div id="appContainer" class="container" style="display: none;">
+        
+        <div class="nav-bar">
+            <button onclick="cerrarSesion()" class="btn-back">← Cambiar de Rol (<span id="currentRoleLabel"></span>)</button>
+        </div>
+
+        <!-- SECCIÓN DE TOMA DE PEDIDOS (Exclusivo Mesero) -->
+        <div class="card" id="sectionCaja" style="display: none;">
+            <h2>Menú & Registro de Pedido</h2>
+            
+            <p class="section-instruction">1. Toca el producto para agregarlo:</p>
+            
+            <!-- CONTENEDOR DE CATEGORÍAS -->
+            <div id="menuContainer">
+                <!-- Se llena dinámicamente con secciones -->
+            </div>
+
+            <button onclick="reiniciarPedido()" class="btn-reset">Reiniciar / Limpiar Selección</button>
+
+            <div class="form-group" style="margin-top: 15px;">
+                <label for="customerNotes">Notas del cliente / Modificaciones:</label>
+                <textarea id="customerNotes" rows="2" placeholder="Ej: Sin cebolla, salsas aparte..."></textarea>
+            </div>
+
+            <!-- SECCIÓN DE TOTAL -->
+            <div class="payment-section">
+                <div class="total-display">
+                    <span>Total a Pagar:</span>
+                    <strong id="spanTotalPagar">$0</strong>
+                </div>
+
+                <button class="btn-submit-order" onclick="procesarOrdenYPago()">Enviar Pedido a Cocina</button>
+            </div>
+        </div>
+
+        <!-- SECCIÓN DE PANEL DE GERENCIA -->
+        <div class="card" id="sectionGerencia" style="display: none;">
+            <h2>Panel de Gerencia</h2>
+            
+            <div class="monthly-summary-box">
+                <h3>Ingresos del Día</h3>
+                <p id="dailyTotalText" class="monthly-amount">$0</p>
+            </div>
+
+            <div class="monthly-summary-box" style="margin-top: 15px;">
+                <h3>Acumulado Histórico (Mes)</h3>
+                <p id="monthlyTotalText" class="monthly-amount">$0</p>
+                <button class="btn-danger" onclick="eliminarHistorialVentas()">Eliminar Historial de Ventas</button>
+            </div>
+
+            <h3 style="margin-top: 25px;">Gestión de Productos del Menú</h3>
+            
+            <div id="gerenteMenuList" style="margin-bottom: 20px;">
+                <!-- Lista de platos actuales -->
+            </div>
+
+            <div class="form-group">
+                <label>Categoría:</label>
+                <select id="newProdCategory">
+                    <option value="salchipapas">Salchipapas</option>
+                    <option value="hamburguesas">Hamburguesas</option>
+                    <option value="minihamburguesa">Minihamburguesa</option>
+                    <option value="perras">Perras</option>
+                    <option value="gaseosas">Gaseosas</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Nombre del Plato:</label>
+                <input type="text" id="newProdName" placeholder="Ej: Salchipapa Especial">
+            </div>
+            <div class="form-group">
+                <label>Precio ($ COP):</label>
+                <input type="number" id="newProdPrice" placeholder="Ej: 28000">
+            </div>
+            <div class="form-group">
+                <label>Seleccionar Imagen del Dispositivo:</label>
+                <input type="file" id="newProdImageFile" accept="image/*">
+            </div>
+            <button class="btn-success" onclick="agregarProductoMenu()">Agregar al Menú</button>
+        </div>
+
+        <!-- SECCIÓN DE DESPACHO / COCINA -->
+        <div class="card" id="sectionCocina" style="display: none;">
+            <h2>Pantalla de Cocina (Dispatch)</h2>
+            <div id="kitchenQueue">
+                <p style="color: #777;">No hay órdenes pendientes en este momento.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
